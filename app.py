@@ -9,13 +9,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# app factory help to create only one app
+# app factory helps to create only one app
 def create_app():
     app = Flask(__name__)
     client = MongoClient(os.getenv("MONGODB_URI"), tlsCAFile=certifi.where())
 
     app.db = client.microblog
 
+    # methods are arguments
     @app.route("/", methods=["GET", "POST"])
     def home():
         if request.method == "POST":
@@ -33,5 +34,13 @@ def create_app():
             for entry in app.db.entries.find({})
         ]
         return render_template("home.html", entries=entries_with_date)
+
+    @app.route("/recent")
+    def recent():
+        return render_template("recent.html")
+
+    @app.route("/calendar")
+    def calendar():
+        return render_template("calendar.html")
 
     return app
