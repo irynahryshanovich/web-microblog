@@ -6,5 +6,5 @@ venv/
 # python compiled files
 *.pyc
 __pycache__/
-*.doxc
+*.docx
 .DS_Store
